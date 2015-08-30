@@ -1,0 +1,72 @@
+﻿@model UserStories.Core.Models.StoryCreateModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>StoryCreateModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Groups, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width:250px;">
+                @Html.ListBoxFor(model => model.Groups, Model.Groups.Select(s => new SelectListItem() { Value = s.Id.ToString(), Text = s.Name }), new  {@class="group-dropdown" })
+                @Html.ValidationMessageFor(model => model.Groups, "", new { @class = "text-danger" })
+               
+            </div>
+        </div>
+
+        
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    <a href="@Url.Action("Index", "Story")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Back
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(".group-dropdown").select2();
+    </script>
+}

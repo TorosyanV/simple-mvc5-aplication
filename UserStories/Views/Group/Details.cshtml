@@ -1,0 +1,116 @@
+﻿@model UserStories.Core.Models.GroupViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GroupViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemborsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemborsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StoriesCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StoriesCount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.HiddenFor(model => model.Id)
+
+
+    @if (Model.IsJoined)
+    {
+        <a class="btn btn-warning leave-group">
+            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Leave
+        </a>
+    }
+    else
+    {
+        <a class="btn btn-success join-group">
+            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>Join
+        </a>
+    }
+    
+    
+    <a href="@Url.Action("Index", "Group")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Back
+    </a>
+
+
+</p>
+
+
+@section scripts{
+    <script>
+        console.log('loaded', $('.join-group'));
+
+        $('.join-group').on('click', function () {
+
+            var groupId = $(this).prev("input[type='hidden']").val();
+            console.log(groupId);
+
+            $.ajax({
+                url: "/group/join",
+                type: "POST",
+                data: JSON.stringify({ groupId: groupId }),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    window.location.href = "/Group";
+                    console.log('success');
+                }
+            });
+
+        });
+
+        $('.leave-group').on('click', function () {
+
+            var groupId = $(this).prev("input[type='hidden']").val();
+            console.log(groupId);
+
+            $.ajax({
+                url: "/group/leave",
+                type: "POST",
+                data: JSON.stringify({ groupId: groupId }),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    window.location.href = "/Group";
+                    console.log('success');
+                }
+            });
+
+        });
+    </script>
+}
