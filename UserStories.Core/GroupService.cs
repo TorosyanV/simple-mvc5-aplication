@@ -68,6 +68,7 @@ namespace UserStories.Core
                 Name = g.Name,
                 MemborsCount = g.JoinedUsers.Count,
                 Description = g.Description,
+                 StoriesCount=g.Stories.Count,
                 IsJoined = g.JoinedUsers.Where(u => u.Id == userId).Count() == 0 ? false : true
             }).FirstOrDefault(g => g.Id == groupId);
         }

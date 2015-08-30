@@ -33,17 +33,10 @@ namespace UserStories.Controllers
         [HttpPost]
         public ActionResult Create(StoryCreateModel model, List<int> groups)
         {
-            if (true || ModelState.IsValid)
-            {
+           
                 model.Groups = groups.Select(id => new GroupSelectModel() { Id=id}).ToList();
                 _storyService.Add(User.Identity.GetUserId(), model,groups);
                 return RedirectToAction("Index");
-
-            }
-            else
-            {
-                return View(model);
-            }
 
         }
         public ActionResult Details(int id)
